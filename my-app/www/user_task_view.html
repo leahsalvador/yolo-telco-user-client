@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="viewport"
+    content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+  <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+  <!-- <meta http-equiv="Content-Security-Policy"
+    content="default-src * 'unsafe-inline' gap:; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+
+  <!-- Bootstrap Core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- MetisMenu CSS -->
+  <link href="vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+  <!-- DataTables CSS -->
+  <link href="vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+
+  <!-- DataTables Responsive CSS -->
+  <link href="vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link href="dist/css/sb-admin-2.css" rel="stylesheet">
+
+  <!-- Custom Fonts -->
+  <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+  <link rel="stylesheet" type="text/css" href="css/index.css" />
+
+  <title>Telco</title>
+  <style>
+    .logout {
+      text-align: right;
+    }
+
+    .per_task {
+      display: list-item;
+      margin-left: 10px;
+    }
+
+    .l {
+      position: absolute;
+      top: 25%;
+      left: 35px;
+      margin-left: 10px;
+      transform: translate(-25%);
+      top: 15px;
+      width: 100px;
+    }
+
+    .site_name_holder {
+      width: 50%;
+    }
+
+    .solo_team_grid {
+      display: grid;
+      grid-template-columns: auto auto;
+    }
+
+    .grid-task {
+      padding: 10px;
+    }
+
+    .mid {
+      border-right: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: auto auto auto;
+    }
+
+    .grid-item {
+      margin: 10px;
+    }
+
+    @media only screen and (max-width: 768px) {
+      .site_name_holder {
+        width: 150px;
+      }
+
+      .get_video {
+        margin-bottom: 4px;
+      }
+
+      .solo_team_grid {
+        display: grid;
+        grid-template-columns: auto;
+      }
+
+      .grid-task {
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 5px;
+      }
+
+      .mid {
+        border-right: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      .grid-container {
+        display: grid;
+        grid-template-columns: auto;
+
+      }
+    }
+  </style>
+
+</head>
+
+
+<div id="wrapper">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+    <div class="navbar-header" style="position:relative;">
+      <b class="l" style="color:#0981b5;">YOLO-TELCO</b>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+    </div>
+    <!-- /.navbar-header -->
+
+    <ul class="nav navbar-top-links navbar-right">
+
+
+    </ul>
+    <!-- /.navbar-top-links -->
+
+    <div class="navbar-default sidebar" role="navigation">
+      <div class="sidebar-nav navbar-collapse">
+        <ul class="nav" id="side-menu">
+          <li>
+            <a href="#" id="link1" class="active" id="manage-task"><i class="fa fa-list fa-fw"></i> Tasks</a>
+          </li>
+          <li>
+            <a href="manage_team.html" id="manage-team"><i class="fa fa-video-camera fa-fw "></i> Manage Team</a>
+          </li>
+          <!-- <li>
+            <a href="#" id="link2"><i class="fa fa-video-camera fa-fw"></i> Team Tasks</a>
+          </li> -->
+          <li>
+            <a href="" id="logout"><i class="fa fa-sign-out fa-fw"></i>Logout</a>
+          </li>
+
+        </ul>
+      </div>
+      <!-- /.sidebar-collapse -->
+    </div>
+    <!-- /.navbar-static-side -->
+  </nav>
+
+
+
+  <div id="page-wrapper">
+    <div class="row">
+      <div class="col-lg-12">
+        <h1 class="page-header">Things to do</h1>
+      </div>
+      <!-- /.col-lg-12 -->
+
+    </div>
+    <!-- /.row -->
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div></div>
+          </div>
+          <!-- /.panel-heading -->
+          <div class="panel-body">
+            <div class="solo_task_append">
+
+            </div>
+            <!-- /.table-responsive -->
+          </div>
+          <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+      </div>
+      <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+
+
+  </div>
+  <!-- /#page-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+
+
+
+<div class="modal fade" id="send_vid" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="false" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style=" background-color: #0981b5;border-radius: 6px 6px 0 0;color:#fff;">
+        <button type="button" data-dismiss="modal" class="close" data-number="2" aria-label="Close">
+          <span aria-hidden="true" style="color:#fff;">&times;</span>
+        </button>
+        <h4 class="modal-title" id="exampleModalLabel">Send Video</h4>
+      </div>
+      <div class="modal-body">
+        <form method="post" id="add_form">
+          <div id="video_loading"></div>
+          <input type="hidden" id="admin_id">
+          <!--<input type="hidden" id="video_file">-->
+          <input type="hidden" id="check_vid">
+          <div class="form-group">
+              <label for="name" class="col-form-label">Choose file:</label>
+              <input type="file" class="form-control" id="video_file" name="video_file">
+          </div>
+          <div class="form-group">
+            <label for="name" class="col-form-label">Video Title:</label>
+            <input type="text" class="form-control" id="video_name" name="video_name">
+          </div>
+          <!-- <label for="name" class="col-form-label">Send to:</label> -->
+          <!-- <div class="select_user"></div> -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" name="close"
+          id="cancel_vid">Cancel</button>
+        <button id="send_video" style="background-color:#0981b5;color:#fff;" class="btn">Send</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="send_img" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="false" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style=" background-color: #0981b5;border-radius: 6px 6px 0 0;color:#fff;">
+        <button type="button" data-dismiss="modal" class="close" data-number="2" aria-label="Close">
+          <span aria-hidden="true" style="color:#fff;">&times;</span>
+        </button>
+        <h4 class="modal-title" id="exampleModalLabel">Send Image</h4>
+      </div>
+      <div class="modal-body">
+        <form method="post" id="add_form">
+          <div id="image_loading"></div>
+          <input type="hidden" id="admin_id1">
+          <!--<input type="hidden" id="image_file">-->
+          <input type="hidden" id="check_img">
+          <div class="form-group">
+              <label for="name" class="col-form-label">Choose file:</label>
+              <input type="file" class="form-control" id="image_file" name="image_file">
+          </div>
+          <div class="form-group">
+            <label for="name" class="col-form-label">Image Title:</label>
+            <input type="text" class="form-control" id="image_name" name="image_name">
+          </div>
+          <!-- <label for="name" class="col-form-label">Send to:</label> -->
+          <!-- <div class="select_user1"></div> -->
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" name="close"
+          id="cancel_img">Cancel</button>
+        <button id="send_image" style="background-color:#0981b5;color:#fff;" class="btn">Send</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="send_doc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="false" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style=" background-color: #0981b5;border-radius: 6px 6px 0 0;color:#fff;">
+        <button type="button" data-dismiss="modal" class="close" data-number="2" aria-label="Close">
+          <span aria-hidden="true" style="color:#fff;">&times;</span>
+        </button>
+        <h4 class="modal-title" id="exampleModalLabel">Send Document</h4>
+      </div>
+      <div class="modal-body">
+        <form method="post" id="add_document" enctype="multipart/form-data">
+            <input type="hidden" id="admin_id2" name="user">
+            <input type="hidden" id="check_doc" name="task_id">
+          <div class="form-group">
+            <label for="name" class="col-form-label">Document Title:</label>
+            <input type="text" class="form-control" id="document_name" name="file_title">
+            <label for="name" class="col-form-label">Choose File:</label>
+            <input type="file" class="form-control" id="document_file" name="document">
+          </div>
+          <!-- <label for="name" class="col-form-label">Send to:</label> -->
+          <!-- <div class="select_user1"></div> -->
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" name="close"
+          id="cancel_img">Cancel</button>
+        <button id="send_document" style="background-color:#0981b5;color:#fff;" class="btn">Send</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="get_t_video" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="false" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style=" background-color: #0981b5;border-radius: 6px 6px 0 0;color:#fff;">
+        <button type="button" data-dismiss="" class="close close_evidence_modal" data-number="2" aria-label="Close">
+          <span aria-hidden="true" style="color:#fff;">&times;</span>
+        </button>
+        <h4 class="modal-title" id="exampleModalLabel">Video Evidence</h4>
+      </div>
+      <div class="modal-body">
+        <div id="get_video_list"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary close_evidence_modal" data-dismiss="" name="close">Close</button>
+        <!-- <button id="send_video" style="background-color:#0981b5;color:#fff;" class="btn">Send</button> -->
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="get_t_image" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="false" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style=" background-color: #0981b5;border-radius: 6px 6px 0 0;color:#fff;">
+        <button type="button" data-dismiss="modal" class="close" data-number="2" aria-label="Close">
+          <span aria-hidden="true" style="color:#fff;">&times;</span>
+        </button>
+        <h4 class="modal-title" id="exampleModalLabel">Image Evidence</h4>
+      </div>
+      <div class="modal-body">
+        <div id="get_image_list"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" name="close">Close</button>
+        <!-- <button id="send_video" style="background-color:#0981b5;color:#fff;" class="btn">Send</button> -->
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="send_vid_member" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="false" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style=" background-color: #0981b5;border-radius: 6px 6px 0 0;color:#fff;">
+        <button type="button" data-dismiss="modal" class="close" data-number="2" aria-label="Close">
+          <span aria-hidden="true" style="color:#fff;">&times;</span>
+        </button>
+        <h4 class="modal-title" id="exampleModalLabel">Send Video</h4>
+      </div>
+      <div class="modal-body">
+        <form method="post" id="add_form">
+          <input type="hidden" id="team_leader_vid">
+          <input type="hidden" id="member_video_file">
+          <input type="hidden" id="member_check_vid">
+          <div class="form-group">
+            <label for="name" class="col-form-label">Video Title:</label>
+            <input type="text" class="form-control" id="member_video_name" name="member_video_name">
+          </div>
+          <!-- <label for="name" class="col-form-label">Send to:</label>
+          <div class="select_user"></div> -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" name="close"
+          id="cancel_vid">Cancel</button>
+        <button id="member_send_video" style="background-color:#0981b5;color:#fff;" class="btn">Send</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="send_img_member" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="false" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style=" background-color: #0981b5;border-radius: 6px 6px 0 0;color:#fff;">
+        <button type="button" data-dismiss="modal" class="close" data-number="2" aria-label="Close">
+          <span aria-hidden="true" style="color:#fff;">&times;</span>
+        </button>
+        <h4 class="modal-title" id="exampleModalLabel">Send Image</h4>
+      </div>
+
+      <div class="modal-body">
+        <form method="post" id="add_form">
+          <input type="hidden" id="team_leader_img">
+          <input type="hidden" id="member_image_file">
+          <input type="hidden" id="member_check_img">
+          <div class="form-group">
+            <label for="name" class="col-form-label">Image Title:</label>
+            <input type="text" class="form-control" id="member_image_name" name="member_image_name">
+          </div>
+          <!-- <label for="name" class="col-form-label">Send to:</label>
+          <div class="select_user1"></div> -->
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" name="close"
+          id="cancel_img">Cancel</button>
+        <button id="member_send_image" style="background-color:#0981b5;color:#fff;" class="btn">Send</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="send_document_member" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="false" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style=" background-color: #0981b5;border-radius: 6px 6px 0 0;color:#fff;">
+        <button type="button" data-dismiss="modal" class="close" data-number="2" aria-label="Close">
+          <span aria-hidden="true" style="color:#fff;">&times;</span>
+        </button>
+        <h4 class="modal-title" id="exampleModalLabel">Send Image</h4>
+      </div>
+
+      <div class="modal-body">
+        <form method="post" id="add_form">
+          <input type="hidden" id="team_leader_document">
+          <!-- <input type="hidden" id="member_document_file"> -->
+          <input type="hidden" id="member_check_doc">
+          <div class="form-group">
+            <label for="name" class="col-form-label">Document Title:</label>
+            <input type="text" class="form-control" id="member_document_name" name="member_document_name">
+            <label for="name" class="col-form-label">Choose File:</label>
+            <input type="file" class="form-control" id="member_document_file" name="member_document_file">
+          </div>
+          <!-- <label for="name" class="col-form-label">Send to:</label>
+          <div class="select_user1"></div> -->
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" name="close"
+          id="cancel_doc">Cancel</button>
+        <button id="member_send_document" style="background-color:#0981b5;color:#fff;" class="btn">Send</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="watch_video" tabindex="-1" role="dialog" aria-labelledby="modal-video-label">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-video">
+          <div class="embed-responsive embed-responsive-16by9">
+            <div class="append_instruction">
+            </div>
+            <video id="link_vid" src="" vid="" video_id="" controls>
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- jQuery -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/sweetalert/sweetalert2.all.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script src="vendor/metisMenu/metisMenu.min.js"></script>
+
+<!-- DataTables JavaScript -->
+<script src="vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script src="vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+<script src="vendor/datatables-responsive/dataTables.responsive.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="dist/js/sb-admin-2.js"></script>
+
+
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/geoloc.js"></script>
+<script type="text/javascript" src="js/record.js"></script>
+<script>
+
+  function onSuccess(position) {
+    let latitude = position.coords.latitude;
+    let longitude = position.coords.longitude;
+    let altitude = position.coords.altitude;
+    let accuracy = position.coords.accuracy;
+    let altitudeAccuracy = position.coords.altitudeAccuracy;
+    let heading = position.coords.heading;
+    let speed = position.coords.speed;
+    let timestamp = position.timestamp;
+    $.ajax({
+      url: "http://34.74.113.124/telco_user/user/save_user_location",
+      method: "POST",
+      data: { latitude: latitude, longitude: longitude, speed: speed, timestamp: timestamp },
+      success: function (data) {
+      }
+    });
+  };
+  var myVar;
+  function getLocation() {
+    myVar = setInterval(alertFunc, 3000);
+  }
+  function alertFunc() {
+    navigator.geolocation.getCurrentPosition(onSuccess,
+      null,
+      { maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
+  }
+
+
+  function today() {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+      dd = '0' + dd;
+    }
+    if (mm < 10) {
+      mm = "0" + mm;
+    }
+    today = yyyy + '-' + mm + '-' + dd;
+    return today;
+  }
+
+  function dateAndTimeNow() {
+    var d = new Date($.now());
+    return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+  }
+
+  function update_user_last_activity_time() {
+    $.ajax({
+      url: "http://34.74.113.124/telco_user/user/user_activity_time_monitoring",
+      success: function (data) {
+      }
+    });
+  }
+
+
+
+
+  function initiate_users_logout() {
+    myVar = setInterval(check_if_the_user_was_force_to_logout, 3000);
+  }
+
+  var getParams = function (url) {
+    var params = {};
+    var parser = document.createElement('a');
+    parser.href = url;
+    var query = parser.search.substring(1);
+    var vars = query.split('&');
+    for (var i = 0; i < vars.length; i++) {
+      var pair = vars[i].split('=');
+      params[pair[0]] = decodeURIComponent(pair[1]);
+    }
+    return params;
+  };
+  const url = window.location.href;
+  const param = getParams(url);
+  let user_id = param.id;
+  const tl = param.tl;
+  /*if(user_id === undefined){
+    if(localStorage.getItem())
+    window.location.href = "index.html";
+  }
+  if(tl == '1'){
+    $(function(){
+      $('#manage-task').attr('href',`user_task_view.html?id=${user_id}&tl=1`);
+      $('#manage-team').attr('href',`manage_team.html?id=${user_id}&tl=1`);
+    });
+  }//*/
+
+  if(localStorage.getItem('uid') === undefined || localStorage.getItem('uid') === null || localStorage.getItem('uid') === 'null'){
+    window.location.href = "index.html";
+  }else{
+    if(localStorage.getItem('tluid') === undefined || localStorage.getItem('tluid') === null || localStorage.getItem('tluid') === 'null'){
+      $('#manage-team').hide();
+    }
+    user_id = localStorage.getItem('uid');
+  }
+
+  stopChecking = false;
+  checking_login = false;
+  check_if_the_user_was_force_to_logout();
+  function check_if_the_user_was_force_to_logout() {
+    if(stopChecking){
+      return;
+    }
+
+    if(checking_login){
+      return;
+    }
+    $.ajax({
+      url: "http://34.74.113.124/telco_user/user/get_all_logged_in_users",
+      success: function (data) {
+        checking_login = false;
+        if (data != "good") {
+          stopChecking = true;
+          Swal.fire({
+            title: 'Logged-out!',
+            text: 'The Admin Forced You to Logout!',
+            icon: 'error',
+            allowOutsideClick: false
+          }).then((value) => {
+            console.log(value);
+            //swal(`The returned value is: ${value}`);
+            localStorage.clear();
+            window.location.href = "index.html";
+          });
+        }
+      },
+      error: function(data){
+        checking_login = false;
+      }
+    });
+  }
+
+
+
+
+
+  $(document).ready(function () {
+
+
+    var getParams = function (url) {
+      var params = {};
+      var parser = document.createElement('a');
+      parser.href = url;
+      var query = parser.search.substring(1);
+      var vars = query.split('&');
+      for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split('=');
+        params[pair[0]] = decodeURIComponent(pair[1]);
+      }
+      return params;
+    };
+    const url = window.location.href;
+    const param = getParams(url);
+    const id = param.id;
+    $('#link1').attr('href', `user_task_view.html?id=${id}`);
+    let g_site_task_id = null;
+
+    initiate_users_logout();
+    getLocation();
+
+
+
+
+    $('.close_evidence_modal').click(function () {
+      $('#get_t_video').modal('hide');
+
+    });
+
+
+    $(document).on('click', '#logout', function (event) {
+      event.preventDefault();
+      swal({
+        title: 'Are you sure',
+        text: "You want to logout?",
+        type: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes'
+      }).then((result) => {
+
+        if (result.value) {
+          window.location.href = "index.html";
+          $.ajax({
+            url: "http://34.74.113.124/telco_user/user/delete_user_on_login_details_who_logout",
+            success: function (data) {
+              //alert('deleted');
+              localStorage.clear();
+            }
+          });
+        }
+
+      });
+
+
+
+    });
+    //======================================================================================
+
+
+    $('#watch_video').on('shown.bs.modal', function (event) {
+      // $("#link_vid").html(`<source src="">`);
+      update_user_last_activity_time();
+      let button = $(event.relatedTarget); // Button that triggered the modal
+      let src = button.data('src'); // Extract info from data-* attributes 
+      let video_id = button.data('id');
+      // alert(video_id);
+
+      if (src == "http://34.74.113.124/telco/uploads/null") {
+        $('#link_vid').hide();
+        $('.append_instruction').html('No Instruction yet.');
+        $('.append_instruction').show();
+
+      } else {
+        $('.append_instruction').hide();
+        $('#link_vid').show();
+        $("#link_vid").attr('src', `${src}`);
+        $("#link_vid").html(``);
+      }
+
+      var task_id = button.data('task_id');
+      let id = button.data('id');
+      $('#link_vid').attr('vid', id);
+      $('#link_vid').attr('video_id', id);
+
+      $.ajax({
+        url: "http://34.74.113.124/telco_user/user/get_instruction_by_task_id",
+        method: "POST",
+        data: { task_id: task_id },
+        success: function (data) {
+          if (data == '[]') {
+            $('.append_instruction').html('No Instruction yet.');
+            $('#link_vid').hide();
+          } else {
+            var video = ``;
+            var parsed = $.parseJSON(data);
+            $.each(parsed, function (i, jsondata) {
+              var video_file = jsondata.video;
+              var text_after = video_file.substr(video_file.indexOf(".") + 1);
+
+              if (jsondata.played == 1 && jsondata.request == 0) {
+                $('.append_instruction').html(`Video Already been Played(<a href="#" id="${jsondata.video_id}" class="request_video">Request Again</a>)`);
+                $('#link_vid').hide();
+                $('.append_instruction').show();
+              } else if (jsondata.played == 1 && jsondata.request == 1) {
+                $('.append_instruction').html(`Request Sent Please wait.`);
+                $('#link_vid').hide();
+                $('.append_instruction').show();
+              }
+              else {
+                $('.append_instruction').hide();
+                $('#link_vid').show();
+                $("#link_vid").html(`<source src="${src}">`);
+              }
+
+            });
+          }
+        }
+      });
+
+    });
+
+
+    $("#watch_video").on("hidden.bs.modal", function () {
+      var vid = document.getElementById("link_vid");
+      vid.pause();
+    });
+
+    document.getElementById('link_vid').addEventListener('ended', myHandler, false);
+    function myHandler(e) {
+      $.post('http://34.74.113.124/telco_user/user/played_video', { video_id: $('#link_vid').attr('vid') }, function (data) {
+        $('.append_instruction').html(`Video Already been Played(<a href="#" id="${$('#link_vid').attr('video_id')}" class="request_video">Request Again</a>)`);
+        $('#link_vid').hide();
+        $('.append_instruction').show();
+      });
+    }
+
+
+    $(document).on('click', '.request_video', function (e) {
+      e.preventDefault();
+      update_user_last_activity_time();
+      let video_id = $(this).attr('id');
+      $.ajax({
+        url: 'http://34.74.113.124/telco_user/user/request_video',
+        method: 'POST',
+        data: {
+          video_id: video_id
+        }, success: function (data) {
+          swal(
+            'Request Successfully!',
+            'Please wait for the ADMIN response.',
+            'success'
+          ).then(function () {
+            $('.append_instruction').html(`Waiting For Admin to Response to your video request.`);
+          });
+        }
+      });
+    });
+    //==============================================================================================
+
+
+
+    $('#send_vid').on('shown.bs.modal', function (event) {
+      update_user_last_activity_time();
+      var request_users = 'users';
+      $.ajax({
+        url: "http://34.74.113.124/telco_user/user/admin_user",
+        method: 'POST',
+        data: {
+          request_users: request_users,
+        }, success: function (data) {
+          // var users_list = '';
+          // users_list += '<select class="form-control" name="users_list" user_id="" id="users_list">';
+          // users_list += '<option value="">Select User</option>';
+          var parsed = $.parseJSON(data);
+          $.each(parsed, function (i, jsondata) {
+            // users_list += `<option class="optionvalue" user_id="${jsondata.user_id}" value="${jsondata.user_id}">${jsondata.first_name} ${jsondata.last_name}</option>`;
+            $('#admin_id').val(`${jsondata.user_id}`);
+          });
+          // users_list += '</select>';
+          // $('.select_user').html(users_list);
+
+        }
+      });
+    });
+
+    $('#send_img').on('shown.bs.modal', function (event) {
+      update_user_last_activity_time();
+
+      var request_users = 'users';
+      $.ajax({
+        url: "http://34.74.113.124/telco_user/user/admin_user",
+        method: 'POST',
+        data: {
+          request_users: request_users,
+        }, success: function (data) {
+          var users_list = '';
+          // users_list += '<select class="form-control" name="users_list1" user_id="" id="users_list1">';
+          // users_list += '<option value="">Select User</option>';
+          var parsed = $.parseJSON(data);
+          $.each(parsed, function (i, jsondata) {
+            // users_list += `<option class="optionvalue" user_id="${jsondata.user_id}" value="${jsondata.user_id}">${jsondata.first_name} ${jsondata.last_name}</option>`;
+            $('#admin_id1').val(`${jsondata.user_id}`);
+          });
+          // users_list += '</select>';
+          // $('.select_user1').html(users_list);
+        }
+      });
+    });
+
+
+    $('#send_doc').on('shown.bs.modal', function (event) {
+      update_user_last_activity_time();
+
+      var request_users = 'users';
+      $.ajax({
+        url: "http://34.74.113.124/telco_user/user/admin_user",
+        method: 'POST',
+        data: {
+          request_users: request_users,
+        }, success: function (data) {
+          var users_list = '';
+          // users_list += '<select class="form-control" name="users_list1" user_id="" id="users_list1">';
+          // users_list += '<option value="">Select User</option>';
+          var parsed = $.parseJSON(data);
+          $.each(parsed, function (i, jsondata) {
+            // users_list += `<option class="optionvalue" user_id="${jsondata.user_id}" value="${jsondata.user_id}">${jsondata.first_name} ${jsondata.last_name}</option>`;
+            $('#admin_id2').val(`${jsondata.user_id}`);
+          });
+          // users_list += '</select>';
+          // $('.select_user1').html(users_list);
+        }
+      });
+    });
+
+    $('#cancel_img').click(function () {
+      $('#check_img').val('');
+    });
+
+    $('#cancel_vid').click(function () {
+      $('#check_vid').val('');
+    });
+
+
+    $('#get_t_video').on('show.bs.modal', function (event) {
+      update_user_last_activity_time();
+
+      var button = $(event.relatedTarget); // Button that triggered the modal
+      let final = '';
+      var site_task_id = button.data('site_task_id');
+      if (g_site_task_id == null) {
+        final = site_task_id;
+      } else {
+        final = g_site_task_id;
+      }
+
+
+
+      $.ajax({
+        url: "http://34.74.113.124/telco_user/user/get_video_list",
+        method: "POST",
+        data: {
+          site_task_id: final,
+        },
+        success: function (data) {
+          var video = ``;
+          var parsed = $.parseJSON(data);
+          $.each(parsed, function (i, jsondata) {
+            var video_file = jsondata.file;
+            var text_after = video_file.substr(video_file.indexOf(".") + 1);
+            video += `<h4> Title: ${jsondata.file_title}</h4>
+                      <video width="100%" height="300" controls><source src="http://34.74.113.124/telco_user/uploads/${video_file}" type="video/${text_after}">Your browser does not support the video tag.</video>
+                      <button type="button" class=" delete_task_video btn btn-danger" required_id ="${jsondata.required_id}" id="${jsondata.task_id}">Not Satisfied</button>
+                      &nbsp;&nbsp;<input type="button" id="team_send_video_evidence" class="btn btn-primary team_send_video_evidence" video-title="${jsondata.file_title}" video-file-name="${jsondata.file}" task_id="${jsondata.task_id}" value="Send to Admin">`;
+          });
+          $('#get_video_list').html(video);
+          // alert(data);
+        }
+      });
+
+
+      $.ajax({
+        url: "http://34.74.113.124/telco_user/user/get_all_from_site_tasks_by_site_id",
+        method: "POST",
+        data: { site_task_id: site_task_id },
+        success: function (data) {
+          var parsed = $.parseJSON(data);
+          $.each(parsed, function (i, jsondata) {
+
+            if (jsondata.sent_to_admin != 0) {
+              $('.team_send_video_evidence').val('Already Sent to Admin').prop('disabled', true).css({ 'background-color': '#F0AD4E', 'border': '#F0AD4E' });
+              $('.delete_task_video').prop('disabled', true);
+            }
+
+          });
+        }
+      });
+
+    });
+
+    $('#get_t_video').on('hidden.bs.modal', function (e) {
+      update_user_last_activity_time();
+
+      g_site_task_id = null;
+    })
+
+    $(document).on('click', '.team_send_video_evidence', function (event) {
+      event.preventDefault();
+      let file_name = $(this).attr('video-file-name');
+      let task_id = $(this).attr('task_id');
+      let file_title = $(this).attr('video-title');
+
+      $.ajax({
+        url: "http://34.74.113.124/telco_user/user/send_team_file",
+        method: "POST",
+        data: {
+          file_type: "video",
+          task_id: task_id,
+          file_name: file_name,
+          file_title: file_title
+        },
+        success: function (data) {
+          swal('Success', 'Video Successfully Sent', 'success').then(function () {
+            $('#get_t_video').modal('hide');
+          });
+        }
+      });
+
+    });
+    $('#get_t_image').on('show.bs.modal', function (event) {
+      update_user_last_activity_time();
+
+      var button = $(event.relatedTarget); // Button that triggered the modal
+      var site_task_id = button.data('site_task_id');
+
+      if (g_site_task_id == null) {
+        final = site_task_id;
+      } else {
+        final = g_site_task_id;
+      }
+
+      $.ajax({
+        url: "http://34.74.113.124/telco_user/user/get_if_image_was_sent_team",
+        method: "POST",
+        data: { site_task_id: site_task_id },
+        success: function (data) {
+
+          var parsed = $.parseJSON(data);
+          $.each(parsed, function (i, jsondata) {
+            if (jsondata.sent_to_admin == 1) {
+              $('.delete_task_image').prop('disabled', true);
+              $('#team_send_image_evidence').prop('disabled', true).val('Already Sent to Admin').css({ 'background-color': '#EBA941', 'border': '#EBA941' });
+            }
+          });
+
+        }
+      })
+
+      $.ajax({
+        url: "http://34.74.113.124/telco_user/user/get_image_list",
+        method: "POST",
+        data: {
+          site_task_id: final,
+        },
+        success: function (data) {
+          $('#get_image_list').html(data);
+        }
+      });
+    });
+
+    $('#get_t_image').on('hidden.bs.modal', function (e) {
+      g_site_task_id = null;
+    });
+    $(document).on('click', '.team_send_image_evidence', function (event) {
+      update_user_last_activity_time();
+
+      event.preventDefault();
+      let file_name = $(this).attr('image-file-name');
+      let task_id = $(this).attr('task_id');
+      let file_title = $(this).attr('image-title');
+
+      $.ajax({
+        url: "http://34.74.113.124/telco_user/user/send_team_file",
+        method: "POST",
+        data: {
+          file_type: "image",
+          task_id: task_id,
+          file_name: file_name,
+          file_title: file_title
+        },
+        success: function (data) {
+          swal('Success', 'Image Successfully Sent', 'success').then(function () {
+            $('#get_t_image').modal('hide');
+          });
+        }
+      });
+
+    });
+    $(document).on("click", ".delete_task_video", function (event) {
+      update_user_last_activity_time();
+
+      event.preventDefault();
+      var button = $(event.relatedTarget); // Button that triggered the modal
+      var site_task_id = $(this).attr('id');
+      var required_id = $(this).attr('required_id');
+      swal({
+        title: 'Are you sure',
+        text: "You Are Not Satisfied With this Evidence?",
+        type: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes'
+      }).then((result) => {
+
+        if (result.value) {
+          $.ajax({
+            url: "http://34.74.113.124/telco_user/user/delete_task_video",
+            method: "POST",
+            data: {
+              site_task_id: site_task_id,
+              required_id: required_id
+            },
+            success: function (data) {
+              g_site_task_id = site_task_id;
+              swal('Success', 'Evidence Successfully Deleted', 'success').then(function () {
+                $('#get_t_video').modal('hide');
+              });
+
+            }
+          });
+        } else {
+          return;
+        }
+      });
+    });
+
+    $(document).on("click", ".delete_task_image", function (event) {
+      update_user_last_activity_time();
+
+      event.preventDefault();
+      var button = $(event.relatedTarget); // Button that triggered the modal
+      var site_task_id = $(this).attr('id');
+      var required_id = $(this).attr('required_id');
+      // alert(site_task_id);
+      // alert(required_id);
+      swal({
+        title: 'Are you sure',
+        text: "You want to Delete?",
+        type: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes'
+      }).then((result) => {
+
+        if (result.value) {
+          $.ajax({
+            url: "http://34.74.113.124/telco_user/user/delete_task_image",
+            method: "POST",
+            data: {
+              site_task_id: site_task_id,
+              required_id: required_id
+            },
+            success: function (data) {
+              // $('#get_image_list').html(data);
+              $('#get_video_list').html('No Evidence Yet.');
+              g_site_task_id = site_task_id;
+              swal('Success', 'Task Successfully Deleted', 'success').then(function () {
+                $('#get_t_image').modal('show');
+              });
+
+            }
+          });
+        } else {
+          return;
+        }
+      });
+    });
+    //===============New Updates============================================================================================================================
+    user_task();//initalize function to get user tasks
+    refresh_user_task();
+
+  });// document ready closing
+  //========================================================================================================================================================
+
+  function user_task() {
+    if(stopChecking){
+      return;
+    }
+    $.ajax({
+      url: 'http://34.74.113.124/telco_user/tasks/get_users_solo_tasks',
+      success: function (data) {
+        display_user_task(data);
+      }
+    });
+  }
+
+  function refresh_user_task() {
+    setInterval(function () {
+      user_task();
+    }, 5000);
+  }
+
+  function display_user_task(data) {
+    if (data == '[]') {
+      $('.solo_task_append').html('No Tasks Yet.');
+    } else {
+      var solo_task_list = `<div class="grid-container">`;
+
+      var parsed = $.parseJSON(data);
+      $.each(parsed, function (i, jsondata) {
+        solo_task_list += `<div class="grid-item">`;
+        solo_task_list += `<ul class="list-group" >`;
+        solo_task_list += `<li style="background-color:#F5F5F5;" class="list-group-item"><span style="color: #32568f;">Site Name:</span> &nbsp; ${jsondata.site_name}</li>`;
+        solo_task_list += `<li style="background-color:#F5F5F5;" class="list-group-item"><span style="color: #32568f;">Task:</span> &nbsp; ${jsondata.site_task}</li>`;
+        //--------------------------------------------------------------
+        if (jsondata.task_date == today()) {
+          solo_task_list += `<li style="background-color:#F5F5F5" class="list-group-item"><span style="color: #32568f;">Date:</span> &nbsp;<span style="color:#59B359">Today</span></li>`;
+        } else if (jsondata.task_date < today()) {
+          solo_task_list += `<li style="background-color:#F5F5F5" class="list-group-item"><span style="color: #32568f;">Date:</span> &nbsp;<span style="color:#D3514D">${jsondata.task_date}(Past)</span></li>`;
+        } else {
+          solo_task_list += `<li style="background-color:#F5F5F5" class="list-group-item"><span style="color: #32568f;">Date:</span> &nbsp;${jsondata.task_date}</li>`;
+        }
+        //--------------------------------------------------------------
+        solo_task_list += `<li style="background-color:#f5f5f5" class="list-group-item"><span style="color: #32568f;">Skills Required:</span> &nbsp;${jsondata.skills_required}</li>`;
+
+        //------------------------------------------------------------
+        solo_task_list += `<li style="background-color:#F5F5F5" class="list-group-item"><span style="color: #32568f;">Evidence Required:</span> &nbsp;`;
+        if (jsondata.required_image_evidence == 'required') {
+          solo_task_list += `Image &nbsp;`;
+        }
+        if (jsondata.required_video_evidence == 'required') {
+          solo_task_list += `Video &nbsp;`;
+        }
+        if (jsondata.required_document_evidence == 'required') {
+          solo_task_list += `Document`;
+        }
+       
+        solo_task_list += `</li >`;
+        //--------------------------------------------------------------
+
+
+        //--------------------------------------------------------------
+        if (jsondata.task_status != 0) {//set to completed on pending
+          solo_task_list += `<li style="background-color:#f5f5f5" class="list-group-item"><span style="color: #32568f;">Status: </span> &nbsp;<span style="color:#58B258">Completed</span></li>`;
+        } else {
+          solo_task_list += `<li style="background-color:#f5f5f5" class="list-group-item"><span style="color: #32568f;">Status: </span> &nbsp;<span style="color:#D3514D">Pending</span></li>`;
+        }
+
+        //--------------------------------------------------------------
+        if (jsondata.task_status == 1) {
+
+
+          //--------------------------------------------------------------
+
+        } else {
+          //--------------------------------------------------------------
+          solo_task_list += `<li style="background-color:#F5F5F5;" class="list-group-item"><span style="color: #32568f;">Actions:</span><br>`;
+          solo_task_list += `<button style="background-color:white;border-radius:4px;border: 2px solid #E9A84C;color:#E9A84C" data-task_id="${jsondata.site_task_id}"  data-toggle="modal" data-target="#watch_video" data-id="${jsondata.video_id}" data-src="http://34.74.113.124/telco/uploads/${jsondata.video}">Intruction</button>`;
+
+          if (jsondata.required_image_evidence == 'required') {
+            if (jsondata.image_alert == 1) {//if not satisfied on image sent
+              solo_task_list += `&nbsp; <button style="background-color:white;border-radius:4px;border: 2px solid #D3514D;color:#D3514D" class="get_image_y_task" id="${jsondata.site_task_id}">Image</button>`;
+            } else if (jsondata.send_image != 0) { //image not uet been checked
+              solo_task_list += `&nbsp; <button style="background-color:white;border-radius:4px;border: 2px solid #A2A5AC;color:#A2A5AC" class="get_image_y_task" id="${jsondata.site_task_id}" disabled>Sent</button>`;
+            } else {
+              solo_task_list += `&nbsp; <button style="background-color:white;border-radius:4px;border: 2px solid #4087C4;color:#4087C4" class="get_image_y_task" id="${jsondata.site_task_id}">Image</button>`;
+            }
+
+
+          }
+          //--------------------------------------------------------------
+
+          if (jsondata.required_video_evidence == 'required') {
+            if (jsondata.video_alert == 1) {
+              solo_task_list += `&nbsp; <button style="background-color:white;border-radius:4px;border: 2px solid #D3514D;color:#D3514D" class="get_video_y_task" id="${jsondata.site_task_id}">Video</button>`;
+            } else if (jsondata.send_video != 0) {
+              solo_task_list += `&nbsp; <button style="background-color:white;border-radius:4px;border: 2px solid #A2A5AC;color:#A2A5AC" class="get_video_y_task" id="${jsondata.site_task_id}" disabled>Sent</button>`;
+            } else {
+              solo_task_list += `&nbsp; <button style="background-color:white;border-radius:4px;border: 2px solid #4087C4;color:#4087C4" class="get_video_y_task" id="${jsondata.site_task_id}">Video</button>`;
+            }
+          }
+          //--------------------------------------------------------------
+
+          if (jsondata.required_document_evidence == 'required') {
+            if (jsondata.document_alert == 1) {
+              solo_task_list += `&nbsp; <button style="background-color:white;border-radius:4px;border: 2px solid #D3514D;color:#D3514D" class="get_document_y_task" id="${jsondata.site_task_id}">Document</button>`;
+            } else if (jsondata.send_document != 0) {
+              solo_task_list += `&nbsp; <button style="background-color:white;border-radius:4px;border: 2px solid #A2A5AC;color:#A2A5AC" class="get_document_y_task" id="${jsondata.site_task_id}" disabled>Sent</button>`;
+            } else {
+              solo_task_list += `&nbsp; <button style="background-color:white;border-radius:4px;border: 2px solid #4087C4;color:#4087C4" class="get_document_y_task" id="${jsondata.site_task_id}">Document</button>`;
+            }
+          }
+
+
+        }// closing if task_completed
+        //--------------------------------------------------------------
+        solo_task_list += `</li>`;
+        solo_task_list += `</ul >`;
+        solo_task_list += `</div>`;
+      });
+      solo_task_list += `</div >`;
+      $('.solo_task_append').html(solo_task_list);
+    }
+  }
+
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport"
+        content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <!-- <meta http-equiv="Content-Security-Policy"
+        content="default-src * 'unsafe-inline' gap:; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- DataTables CSS -->
+    <link href="vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+
+    <!-- DataTables Responsive CSS -->
+    <link href="vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+
+    <title>Telco</title>
+    <style>
+        .logo {
+            padding: 0;
+            margin: 40px auto;
+            width: 250px;
+            height: 60px;
+            font-family: "MS Gothic";
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="app">
+        <div id="deviceready" class="blink">
+            <p class="event listening"></p>
+            <p class="event received"></p>
+        </div>
+
+        <div class="logo">
+            <h3>
+                <center><b style="color:#0981b5;">YOLO-TELCO</b></center>
+            </h3>
+            <h4>
+                <center>Always Safe!
+            </h4>
+            </center>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                    <div style="margin-top:0;" class="login-panel panel panel-default">
+                        <div class="panel-heading" style="background-color:#0981b5;color:white;">
+                            <h4 class="panel-title">Employee Sign In</h4>
+                        </div>
+                        <div class="panel-body">
+                            <form role="form" method="post" id="loginForm">
+                                <fieldset>
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="E-mail" name="email" id="email"
+                                            type="text" autofocus>
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="Password" name="password" id="password"
+                                            type="password" value="">
+                                    </div>
+                                    <!-- Change this to a button or input when using this as a form -->
+                                    <button type="button" name="login" id="login"
+                                        style="background-color:#0981b5;border: #0981b5;"
+                                        class="btn btn-lg btn-success btn-block">Login</button>
+                                    <div class="modal-footer">
+                                            <a href="https://drive.google.com/file/d/1FXh4mCjatRcRZ6ZvbjCzgWQZ4X_1Ux-n/view?usp=sharing" 
+                                            class="text-center" target="_blank">Download iOS User App</a>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/sweetalert/sweetalert2.all.min.js"></script>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="vendor/metisMenu/metisMenu.min.js"></script>
+
+        <!-- DataTables JavaScript -->
+        <script src="vendor/datatables/js/jquery.dataTables.min.js"></script>
+        <script src="vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+        <script src="vendor/datatables-responsive/dataTables.responsive.js"></script>
+        <script type="text/javascript" src="js/record.js"></script>
+        <!-- Custom Theme JavaScript -->
+        <script src="dist/js/sb-admin-2.js"></script>
+
+
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+
+        <script type="text/javascript">
+
+            app.initialize();
+
+            var getParams = function (url) {
+                var params = {};
+                var parser = document.createElement('a');
+                parser.href = url;
+                var query = parser.search.substring(1);
+                var vars = query.split('&');
+                for (var i = 0; i < vars.length; i++) {
+                    var pair = vars[i].split('=');
+                    params[pair[0]] = decodeURIComponent(pair[1]);
+                }
+                return params;
+            };
+            const url = window.location.href;
+            const param = getParams(url);
+            const id = param.id;
+
+            var isset = url.split('?');
+            if (typeof isset[1] != "undefined") {
+                /*swal(
+                    'Logged-out',
+                    'The Admin Forced You to Logout!',
+                    'error'
+                )//*/
+            }
+            if(localStorage.getItem('uid') === undefined || localStorage.getItem('uid') === null || localStorage.getItem('uid') === 'null'){
+            }else{
+                window.location.href = "user_task_view.html";
+            }
+
+
+            $(document).ready(function () {
+                $('#login').click(function () {
+
+                    var email = $('#email').val();
+                    var password = $('#password').val();
+
+                    $.ajax({
+                        url: 'http://34.74.113.124/telco_user/user/',
+                        dataType: 'json',
+                        method: 'POST',
+                        data: {
+                            email: email,
+                            password: password
+                        }, success: function (data) {
+                            if (data == "error") {
+                                swal(
+                                    'Error!',
+                                    'E-mail or password do not match or account does not exist!',
+                                    'error'
+                                )
+                                return;
+                            }
+
+                            if (data.user_id) {
+                                if(data.team_leader == '1'){
+                                    
+                                    localStorage.setItem("uid", data.user_id);
+                                    localStorage.setItem("tluid", data.team_leader);
+                                    window.location.href = `user_task_view.html?id=${data.user_id}&tl=1`;
+                                }else{
+                                    localStorage.setItem("uid", data.user_id);
+                                    window.location.href = `user_task_view.html?id=${data.user_id}`;
+                                }
+                            } else {
+
+                                swal(
+                                    'Error!',
+                                    'E-mail or password do not match or account does not exist!',
+                                    'error'
+                                )
+                            }
+
+                        }, error: function () {
+                            swal(
+                                'Error!',
+                                'E-mail or password do not match or account does not exist!',
+                                'error'
+                            )
+                        }
+
+                    });
+                });
+            });
+
+
+
+        </script>
+
+</body>
+
+</html>

@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport"
+        content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src * 'unsafe-inline' gap:; style-src 'self' 'unsafe-inline'; media-src *" />
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- DataTables CSS -->
+    <link href="vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+
+    <!-- DataTables Responsive CSS -->
+    <link href="vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+
+    <title>Telco</title>
+    <style>
+        .logout {
+            text-align: right;
+        }
+
+        .per_task {
+            display: list-item;
+            margin-left: 10px;
+        }
+
+        .l {
+            position: absolute;
+            top: 25%;
+            left: 35px;
+            margin-left: 10px;
+            transform: translate(-25%);
+            top: 15px;
+            width: 100px;
+        }
+
+        #appended_team {
+            position: relative;
+        }
+
+        .delete_team_and_members {
+            position: absolute;
+            top: -15px;
+            right: 0;
+            z-index: 1000;
+            font-size: 40px;
+            color: #8c1414;
+        }
+    </style>
+
+</head>
+
+
+<div id="wrapper">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header" style="position:relative;">
+            <b class="l" style="color:#0981b5;">YOLO-TELCO</b>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+        </div>
+        <!-- /.navbar-header -->
+
+        <ul class="nav navbar-top-links navbar-right">
+
+
+        </ul>
+        <!-- /.navbar-top-links -->
+
+        <div class="navbar-default sidebar" role="navigation">
+            <div class="sidebar-nav navbar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li>
+                      <a href="user_task_view.html" id="manage-task"><i class="fa fa-list fa-fw"></i> Tasks</a>
+                    </li>
+                    <li>
+                      <a href="#" id="link2" class="active"  id="manage-team"><i class="fa fa-video-camera fa-fw"></i> Manage Team</a>
+                    </li>
+                    <!-- <li>
+                      <a href="#" id="link2"><i class="fa fa-video-camera fa-fw"></i> Team Tasks</a>
+                    </li> -->
+                    <li>
+                      <a href="" id="logout"><i class="fa fa-sign-out fa-fw"></i>Logout</a>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- /.sidebar-collapse -->
+        </div>
+    </nav>
+
+
+
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="page-header">Team Management</h2>
+            </div>
+            <!-- /.col-lg-12 -->
+
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div id="group" class="panel-body ">
+                        <div class="team_list">
+                            <div class="grid-team" style="display:none;" id="add_team" style="border-radius:6px;">
+                                <i class="fa fa-plus" aria-hidden="true"> Add Team</i>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+
+
+    </div>
+    <!-- /#page-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+
+
+<div class="modal fade" id="add_team_modal" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style=" background-color: #0981b5;border-radius: 6px 6px 0 0;color:#fff;">
+                <button type="button" class="close add_team_modal_close" aria-label="Close">
+                    <span aria-hidden="true" style="color:#fff;">&times;</span>
+                </button>
+                <h4 class="modal-title" id="exampleModalLabel">Add Group</h4>
+            </div>
+            <div class="modal-body">
+                <div class="team_name_and_leader"></div>
+                <div class="form-group">
+                    <input type="text" id="team_name" name="team_name" class="form-control" value=""
+                        placeholder="Team Name" />
+                </div>
+
+                <div class="form-group leader_drop_down" id="leader_drop_down">
+                </div>
+
+                <div class="members">
+                    <label>Add Members</label>
+                    <form name="add_name" id="add_name">
+                        <table class="table table-bordered" id="dynamic_field">
+                            <tr id="default_row">
+                                <td class="dynamic_text_field">
+                                </td>
+                                <td>
+                                    <button name="add" id="add" class="btn btn-success">Add More</button>
+                                </td>
+                            </tr>
+
+                        </table>
+                        <div class="add_latest_id_of_team"></div>
+                    </form>
+                </div>
+
+                <div class="form-group save_team_button">
+                    <input style="width:100%;" type="button" id="save_team" name="save_team" class="btn btn-primary"
+                        value="Save" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!----================================================================TEAM ADD TASK ======================================================================-->
+
+
+
+<!---===================================================================TEAM EDIT TASK=============================================================================================-->
+
+
+
+<div class="modal fade-scale" id="add_more_member_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style=" background-color: #0981b5;border-radius: 6px 6px 0 0;color:#fff;">
+                <button type="button" data-dismiss="modal" class="close add_more_member_modal_close" data-number="2"
+                    aria-label="Close">
+                    <span aria-hidden="true" style="color:#fff;">&times;</span>
+                </button>
+                <h4 class="modal-title" id="exampleModalLabel">Add more member</h4>
+            </div>
+            <div class="modal-body">
+
+                <label>Add Members</label>
+                <form name="add_name_1" id="add_name_1">
+                    <table class="table table-bordered" id="dynamic_field_1">
+                        <tr id="default_row">
+                            <td class="dynamic_text_field_1">
+                            </td>
+                            <td>
+                                <button type="button" name="add_1" id="add_1" class="btn btn-success">Add More</button>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="team_id_1"></div>
+                </form>
+
+                <div class="form-group add_more_member_button">
+                    <input style="width:100%;" type="button" id="add_more_team_member_save"
+                        name="add_more_team_member_save" class="btn btn-primary" value="Save" />
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!---================================================================================================================================================================-->
+
+
+<!-- jQuery -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/sweetalert/sweetalert2.all.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script src="vendor/metisMenu/metisMenu.min.js"></script>
+
+<!-- DataTables JavaScript -->
+<script src="vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script src="vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+<script src="vendor/datatables-responsive/dataTables.responsive.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="dist/js/sb-admin-2.js"></script>
+
+
+
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/record.js"></script>
+<script type="text/javascript" src="js/geoloc.js"></script>
+<script>
+
+    var getParams = function (url) {
+        var params = {};
+        var parser = document.createElement('a');
+        parser.href = url;
+        var query = parser.search.substring(1);
+        var vars = query.split('&');
+        for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split('=');
+        params[pair[0]] = decodeURIComponent(pair[1]);
+        }
+        return params;
+    };
+    const url = window.location.href;
+    const param = getParams(url);
+    let user_id = param.id;
+    const tl = param.tl;
+    /*if(user_id === undefined){
+        window.location.href = "index.html";
+    }
+    if(tl == '1'){
+        $(function(){
+        $('#manage-task').attr('href',`user_task_view.html?id=${user_id}&tl=1`);
+        $('#manage-team').attr('href',`manage_team.html?id=${user_id}&tl=1`);
+        });
+    }//*/
+        
+    if(localStorage.getItem('uid') === undefined || localStorage.getItem('uid') === null || localStorage.getItem('uid') === 'null'){
+        window.location.href = "index.html";
+    }else{
+        if(localStorage.getItem('tluid') === undefined || localStorage.getItem('tluid') === null || localStorage.getItem('tluid') === 'null'){
+            window.location.href = "user_task_view.html";
+        }
+        user_id = localStorage.getItem('uid');
+    }
+    function delete_latest_team_on_closing_click() {
+        swal({
+            title: 'Do not save the team?',
+            text: "If you wish to close the modal, this team wont be save.",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.value) {
+                var request_users = '1';
+                $.ajax({
+                    url: "http://34.74.113.124/telco/authentication/get_user_team",
+                    method: 'POST',
+                    data: {
+                        user_id: user_id,
+                    }, success: function (data) {
+
+                        var parsed = $.parseJSON(data);
+                        $.each(parsed, function (i, jsondata) {
+                            var latest_team_id = jsondata.team_id;
+                            $.ajax({
+                                url: "http://34.74.113.124/telco/authentication/delete_closed_team",
+                                method: 'POST',
+                                data: {
+                                    latest_team_id: latest_team_id,
+                                }, success: function (data) {
+                                    $('#add_team_modal').modal('hide');
+                                    $('.members').hide();
+                                    $('.save_team_button').hide();
+                                    $('#team_name').attr('disabled', false);
+                                    $('#users_list').attr('disabled', false);
+                                    $('#team_name').val("");
+                                    $('#users_list').val("");
+                                    $('.added_tr').remove();
+                                }
+                            });
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+
+    $(document).ready(function () {
+
+        $.ajax({
+            url: "http://34.74.113.124/telco/authentication/get_team_leader_and_name_v2",
+            method: 'POST',
+            data: {
+                request_team: '1',
+                user_id: user_id,
+            }, success: function (data) {
+                $('.team_list').append(data);
+            }
+        });
+
+
+        $(document).on('click', '#add_team', function (e) {
+            $('#add_team_modal').modal('show');
+        });
+        $('.members').hide();
+        $('.save_team_button').hide();
+
+        $('#add_team_modal').on('show.bs.modal', function (event) {
+            var request_users = 'users';
+            $.ajax({
+                url: "http://34.74.113.124/telco/authentication/select_leader",
+                method: 'POST',
+                data: {
+                    request_users: request_users,
+                }, success: function (data) {
+                    users_list = '';
+                    var members_list = ''
+                    members_list += '<select class="form-control name-list members_list" name="name[]" id="name" user_id="">';
+                    members_list += ' <option value="">Select Team Member</option>';
+                    users_list += '<select class="form-control" name="users_list" user_id="" id="users_list" value="">';
+                    users_list += '<option value="">Select Team Leader</option>';
+                    var parsed = $.parseJSON(data);
+                    $.each(parsed, function (i, jsondata) {
+                        members_list += '<option class="optionvalue"  data-val="' + jsondata.user_id + '" value="' + jsondata.user_id + '">ID: ' + jsondata.user_id + ' &nbsp;&nbsp;Name: &nbsp;&nbsp;' + jsondata.first_name + ' ' + jsondata.last_name + '</option>';
+                        users_list += '<option class="optionvalue" user_id="' + jsondata.first_name + ' ' + jsondata.last_name + '" value="' + jsondata.user_id + '">ID: ' + jsondata.user_id + ' &nbsp;&nbsp;Name: &nbsp;&nbsp;' + jsondata.first_name + ' ' + jsondata.last_name + '</option>';
+                    });
+                    members_list += '</select>';
+                    users_list += '</select>';
+                    $('td.dynamic_text_field').html(members_list);
+                    $('div.leader_drop_down').html(users_list);
+                }
+            });
+        });
+
+
+        $(document).on('change', '#users_list', function (e) {
+
+            var chosen_option = $('#users_list option:selected').attr('user_id');
+            $(this).attr('user_id', chosen_option);
+            var passed_attr = $(this).attr('user_id');
+            //    alert(passed_attr);
+
+            swal({
+                title: 'Are you sure with these information?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, im sure!'
+            }).then((result) => {
+                if (result.value) {
+                    var team_name = $('#team_name').val();
+                    var team_leader = $('#users_list').val();
+                    $.ajax({
+                        url: "http://34.74.113.124/telco/authentication/save_team",
+                        method: 'POST',
+                        data: {
+                            team_name: team_name,
+                            team_leader: team_leader,
+                            passed_attr: passed_attr,
+                        }, success: function (data) {
+                            //alert($('#users_list').val());
+                            $('.members').show();
+                            $('.save_team_button').show();
+                            $('#team_name').attr('disabled', true);
+                            $('#users_list').attr('disabled', true);
+                            var request_users = '1';
+                            $.ajax({
+                                url: "http://34.74.113.124/telco/authentication/get_latest_team_id",
+                                method: 'POST',
+                                data: {
+                                    request_users: request_users,
+                                }, success: function (data) {
+                                    var latest_team_id = '';
+                                    var parsed = $.parseJSON(data);
+                                    $.each(parsed, function (i, jsondata) {
+                                        latest_team_id += '<input type="hidden" id="latest_team_id" name="latest_team_id" value="' + jsondata.team_id + '">';
+                                    });
+                                    $('div.add_latest_id_of_team').html(latest_team_id);
+                                }
+                            });
+
+                        }
+                    });
+                } else {
+                    $('#users_list').val("");
+                }
+            });
+
+        });
+
+
+        var i = 1;
+        $('#add').click(function (e) {
+            var request_users = '1';
+            e.preventDefault();
+            i++;
+            $('#dynamic_field').append(`<tr id="row${i}" class="added_tr"><td><select class="form-control name-list members_list${i} appended"
+                 name="name[]" id="name"><option value="">Select Team Member</option></select></td><td><button name="remove" id="${i}" class="btn btn-danger btn-remove">X</button></td></tr>`);
+            $.ajax({
+                url: "http://34.74.113.124/telco/authentication/select_leader",
+                method: 'POST',
+                data: {
+                    request_users: request_users,
+                }, success: function (data) {
+                    var users_list = '';
+                    var parsed = $.parseJSON(data);
+                    $.each(parsed, function (i, jsondata) {
+                        users_list += '<option class="members_data" team_id="" data-val="' + jsondata.user_id + '" value="' + jsondata.user_id + '">ID: ' + jsondata.user_id + ' &nbsp;&nbsp;Name: &nbsp;&nbsp;' + jsondata.first_name + ' ' + jsondata.last_name + '</option>';
+                    });
+                    let selected = $('#users_list').val();
+                    $('.members_list' + i).append($(users_list).filter(function () { return $(this).data('val') != selected }).remove());
+
+                }
+            });
+
+        });
+
+        $(document).on('change', '#users_list', function (e) {
+            let selected = $(this).val();
+            $('.members_list > option').show();
+            $('.members_list > option').filter(function () { return $(this).data('val') == selected }).hide();
+        });
+
+        $(document).on('click', '.btn-remove', function () {
+            var button_id = $(this).attr("id");
+            $("#row" + button_id + "").remove();
+        });
+
+        //save first name last_name of member
+
+        $('#save_team').click(function () {
+            var team_id = "";
+            var value1 = $('.members_data:selected').attr('user_id');
+            $('.members_list').attr('user_id', value1);
+            var member_name = $('#add_name').serialize();
+            var member_user_id = $('.members_list').attr('user_id');
+            // alert(member_user_id);
+            // return;
+            // alert(value1);
+            var errorFound = false;
+            $('[name="name[]"]').each(function () {
+                if ($(this).val() == "") {
+                    swal(
+                        'Input error',
+                        'Some fields are empty. Please check.',
+                        'error'
+                    )
+                    errorFound = true;
+                }
+            });
+
+            if (errorFound == true) {
+                return;
+            }
+
+            $.ajax({
+                url: "http://34.74.113.124/telco/authentication/save_member",
+                method: "POST",
+                data: member_name,
+                success: function (data) {
+                    $('#add_name')[0].reset();
+                    //alert(data);
+                    swal(
+                        'Success',
+                        'Team Successfully Created!',
+                        'success'
+                    ).then(function () {
+                        $('#add_team_modal').modal('hide');
+                        $('.members').hide();
+                        $('.save_team_button').hide();
+                        $('#team_name').attr('disabled', false);
+                        $('#users_list').attr('disabled', false);
+                        $('#team_name').val("");
+                        $('#users_list').val("");
+                        $('.added_tr').remove();
+
+                        $.ajax({
+                            url: "http://34.74.113.124/telco/authentication/append_after_adding_team",
+                            method: 'POST',
+                            data: {
+                                request_latest_team: '1'
+                            }, success: function (data) {
+                                $('.team_list').append(data);
+                            }
+                        });
+
+                    });
+                }
+            });
+        });
+
+
+
+        $(document).on('click', '.add_team_modal_close', function (e) {
+            //-------------------------
+            var team_name = $('#team_name').val();
+            var team_leader = $('#users_list').val();
+
+            if (team_name == '' && team_leader == '') {
+                $('#add_team_modal').modal('hide');
+            } else if (team_leader == '' && team_name != '') {
+                $('#add_team_modal').modal('hide');
+            } else if (team_leader != '' && team_name != '') {
+                delete_latest_team_on_closing_click();
+            } else if (team_leader != '' && team_name == '') {
+                delete_latest_team_on_closing_click();
+            }
+            //----------------------------
+        });
+
+
+        $(document).on('click', '.delete_team_and_members', function (e) {
+            e.preventDefault();
+            var team_id = $(this).attr('team_id');
+            swal({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+
+                if (result.value) {
+
+                    $.ajax({
+                        url: "http://34.74.113.124/telco/authentication/delete_team",
+                        method: 'POST',
+                        data: {
+                            team_id: team_id,
+                        }, success: function (data) {
+                            $('div.grid-team').filter(function () {
+                                return $(this).data('delete_team_id') == team_id
+                            }).remove();
+                        }
+                    });
+
+                }
+            });
+        });
+
+        $(document).on('click', '#delete_solo_member', function (e) {
+            e.preventDefault();
+            var team_member_id = $(this).attr('team_member_id');
+            swal({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+
+                if (result.value) {
+
+                    $.ajax({
+                        url: "http://34.74.113.124/telco/authentication/delete_team_member",
+                        method: 'POST',
+                        data: {
+                            team_member_id: team_member_id,
+                        }, success: function (data) {
+                            $('.m').filter(function () {
+                                return $(this).data('member_user_id') == team_member_id
+                            }).remove();
+                        }
+                    });
+
+                }
+            });
+        });
+
+        $('#add_more_member_modal').on('show.bs.modal', function (event) {
+            var request_users = 'users';
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var team_id = button.data('team_id'); // Extract info from data-* attributes 
+
+            $.ajax({
+                url: "http://34.74.113.124/telco/authentication/select_leader",
+                method: 'POST',
+                data: {
+                    request_users: request_users,
+                }, success: function (data) {
+                    var members_list = '';
+                    members_list += '<select class="form-control name-list members_list_1" name="add_name[]" id="name" user_id="">';
+                    members_list += ' <option value="">Select Member</option>';
+                    var parsed = $.parseJSON(data);
+                    $.each(parsed, function (i, jsondata) {
+                        members_list += '<option class="optionvalue_1"  data-val="' + jsondata.user_id + '" value="' + jsondata.user_id + '">ID: ' + jsondata.user_id + ' &nbsp;&nbsp;Name: &nbsp;&nbsp;' + jsondata.first_name + ' ' + jsondata.last_name + '</option>';
+                        // alert(jsondata.user_id);
+                    });
+                    members_list += '</select>';
+
+                    $('.team_id_1').html('<input id="clicked_team_id" type="hidden" name="clicked_team_id" value="' + team_id + '">');
+                    $('td.dynamic_text_field_1').html(members_list);
+                }
+            });
+        });
+
+        $(document).on('click', '.add_more_member_modal_close', function (e) {
+            $('.added_tr_1').remove();
+        });
+
+        var i = 1;
+        $('#add_1').click(function (e) {
+            var request_users = '1';
+            e.preventDefault();
+            i++;
+            $('#dynamic_field_1').append(`<tr id="row${i}" class="added_tr_1"><td><select class="form-control name-list members_list_1${i} appended"
+                 name="add_name[]" id="name"><option value="">Select Team Member</option></select></td><td><button name="remove" id="${i}" class="btn btn-danger btn-remove">X</button></td></tr>`);
+            $.ajax({
+                url: "http://34.74.113.124/telco/authentication/select_leader",
+                method: 'POST',
+                data: {
+                    request_users: request_users,
+                }, success: function (data) {
+                    var users_list = '';
+                    var parsed = $.parseJSON(data);
+                    $.each(parsed, function (i, jsondata) {
+                        users_list += '<option class="members_data_1" team_id="" data-val="' + jsondata.user_id + '" value="' + jsondata.user_id + '">ID: ' + jsondata.user_id + ' &nbsp;&nbsp;Name: &nbsp;&nbsp;' + jsondata.first_name + ' ' + jsondata.last_name + '</option>';
+                    });
+                    $('.members_list_1' + i).append(users_list);
+                }
+            });
+
+        });
+
+        //=============================================================================================================================
+        $('#add_more_team_member_save').click(function () {
+            var member_name = $('#add_name_1').serialize();
+            var team_id = $('#clicked_team_id').val();
+
+            // var test = $('.members_list_1').val();
+            // alert(test);
+            // return;
+
+            var errorFound = false;
+            $('[name="add_name[]"]').each(function () {
+                if ($(this).val() == "") {
+                    $(this).filter(function (index, element) { return $(element).val() != ''; }).serialize();
+                    swal(
+                        'Input error',
+                        'Some fields are empty. Please check.',
+                        'error'
+                    )
+                    errorFound = true;
+                }
+            });
+
+            if (errorFound == true) {
+                return;
+            }
+
+            $.ajax({
+                url: "http://34.74.113.124/telco/authentication/save_more_member",
+                method: "POST",
+                data: member_name,
+                success: function (data) {
+                    $('#add_name')[0].reset();
+                    var limit = data;
+                    $.ajax({
+                        url: "http://34.74.113.124/telco/authentication/get_new_member",
+                        method: 'POST',
+                        data: {
+                            limit: limit
+                        }, success: function (data) {
+                            swal(
+                                'Added!',
+                                'Members added',
+                                'success'
+                            ).then(function () {
+                                var newly_added_member = '';
+                                var parsed = $.parseJSON(data);
+                                $.each(parsed, function (i, jsondata) {
+                                    newly_added_member += '<li class="list-group-item m" data-member_user_id="' + jsondata.user_id + '">&nbsp;&nbsp; ' + jsondata.first_name + ' ' + jsondata.last_name + '<a id="delete_solo_member" team_member_id="' + jsondata.user_id + '"><span class="glyphicon glyphicon-trash"></span></a></li>';
+                                });
+                                $('.append_new' + team_id).append(newly_added_member);
+
+                                $('#add_more_member_modal').modal('hide');
+                                $('.added_tr_1').remove();
+                            });
+
+                        }
+                    });
+                }
+            });
+        });
+
+
+
+
+
+    $(document).on('click', '#logout', function (event) {
+      event.preventDefault();
+      swal({
+        title: 'Are you sure',
+        text: "You want to logout?",
+        type: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes'
+      }).then((result) => {
+
+        if (result.value) {
+          window.location.href = "index.html";
+          $.ajax({
+            url: "http://34.74.113.124/telco_user/user/delete_user_on_login_details_who_logout",
+            success: function (data) {
+              //alert('deleted');
+              localStorage.clear();
+            }
+          });
+        }
+
+      });
+
+
+
+    });
+
+    check_if_the_user_was_force_to_logout();
+    function check_if_the_user_was_force_to_logout() {
+        if(stopChecking){
+        return;
+        }
+
+        if(checking_login){
+        return;
+        }
+        $.ajax({
+        url: "http://34.74.113.124/telco_user/user/get_all_logged_in_users",
+        success: function (data) {
+            checking_login = false;
+            if (data != "good") {
+            stopChecking = true;
+            Swal.fire({
+                title: 'Logged-out!',
+                text: 'The Admin Forced You to Logout!',
+                icon: 'error',
+                allowOutsideClick: false
+            }).then((value) => {
+                console.log(value);
+                //swal(`The returned value is: ${value}`);
+                localStorage.clear();
+                window.location.href = "index.html";
+            });
+            }
+        },
+        error: function(data){
+            checking_login = false;
+        }
+        });
+    }
+    myVar = setInterval(check_if_the_user_was_force_to_logout, 3000);
+    });// document ready closing
+</script>
+
+</body>
+
+</html>

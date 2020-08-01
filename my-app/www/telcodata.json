@@ -1,0 +1,14 @@
+{
+    "user_data": [
+        {
+            "user_id": 1,
+            "first_name": "Erbel",
+            "last_name" : "Galang",
+            "address": "Manapla Brgy 2",
+            "phone": "09876678765",
+            "email": "erbelgalang1@gmail.com",
+            "date_created": "2019-03-26"
+        }
+
+    ]
+}
